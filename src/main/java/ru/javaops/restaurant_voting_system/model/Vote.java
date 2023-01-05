@@ -1,12 +1,11 @@
 package ru.javaops.restaurant_voting_system.model;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
 @Entity
@@ -17,22 +16,28 @@ import java.time.LocalDate;
 @ToString(callSuper = true)
 public class Vote extends BaseEntity{
 
-    @Column(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
-    private Integer userId; //cents
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ToString.Exclude
+    private User user;
 
-    @Column(name = "restaurant_id", nullable = false)
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
-    private Integer restaurantId;
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ToString.Exclude
+    private Restaurant restaurant;
 
     @Column(name = "date", nullable = false)
     @NotNull
     private LocalDate date;
 
-    public Vote(Integer id, Integer userId, Integer restaurantId, LocalDate date) {
+    public Vote(Integer id, User user, Restaurant restaurant, LocalDate date) {
         super(id);
-        this.userId = userId;
-        this.restaurantId = restaurantId;
+        this.user = user;
+        this.restaurant = restaurant;
         this.date = date;
     }
 }

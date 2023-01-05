@@ -5,6 +5,8 @@ import org.springframework.core.NestedExceptionUtils;
 import org.springframework.lang.NonNull;
 import ru.javaops.restaurant_voting_system.HasId;
 import ru.javaops.restaurant_voting_system.error.IllegalRequestDataException;
+import ru.javaops.restaurant_voting_system.model.NamedEntity;
+import ru.javaops.restaurant_voting_system.repository.NamedRepository;
 
 @UtilityClass
 public class ValidationUtil {
@@ -35,5 +37,12 @@ public class ValidationUtil {
     public static Throwable getRootCause(@NonNull Throwable t) {
         Throwable rootCause = NestedExceptionUtils.getRootCause(t);
         return rootCause != null ? rootCause : t;
+    }
+
+    public static void checkExistingName(NamedRepository repository, NamedEntity entity){
+        String name = entity.getName();
+        if (repository.findByName(name) != null){
+            throw new IllegalRequestDataException("Entity with name=" + name + " already exist");
+        }
     }
 }
