@@ -22,6 +22,7 @@ import static ru.javaops.restaurant_voting_system.util.validation.ValidationUtil
 public class AdminRestaurantController {
 
     static final String REST_URL = "/api/admin/restaurants";
+
     private final RestaurantRepository restaurantRepository;
 
     public AdminRestaurantController(RestaurantRepository restaurantRepository) {

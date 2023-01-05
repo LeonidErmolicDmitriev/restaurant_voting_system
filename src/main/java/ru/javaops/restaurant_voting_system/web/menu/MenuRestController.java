@@ -29,8 +29,11 @@ import static ru.javaops.restaurant_voting_system.util.validation.ValidationUtil
 @Slf4j
 @CacheConfig(cacheNames = "menu_items")
 public class MenuRestController {
+
     static final String REST_URL = "/api/profile/menu_items";
+
     private final MenuItemRepository menuItemRepository;
+
     private final EntityManager entityManager;
 
     public MenuRestController(MenuItemRepository menuItemRepository, EntityManager entityManager) {

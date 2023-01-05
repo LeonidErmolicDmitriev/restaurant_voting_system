@@ -20,7 +20,9 @@ import static ru.javaops.restaurant_voting_system.util.validation.ValidationUtil
 @RequestMapping(value = AdminDishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 public class AdminDishController {
+
     static final String REST_URL = "/api/admin/dishes";
+
     private final DishRepository dishRepository;
 
     public AdminDishController(DishRepository dishRepository) {
