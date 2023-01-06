@@ -10,7 +10,6 @@ import java.util.List;
 @Slf4j
 public abstract class AbstractMenuController {
 
-
     protected final MenuItemRepository menuItemRepository;
 
     public AbstractMenuController(MenuItemRepository menuItemRepository) {
