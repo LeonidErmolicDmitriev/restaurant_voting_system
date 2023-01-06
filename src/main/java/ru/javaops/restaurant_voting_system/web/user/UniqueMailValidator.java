@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UniqueMailValidator implements org.springframework.validation.Validator {
 
     private final UserRepository repository;
+
     private final HttpServletRequest request;
 
     @Override
