@@ -20,7 +20,7 @@ public class MenuUtil {
         menuItem.setRestaurant(restaurant);
         menuItem.setDate(menuItemTo.getDate());
         menuItem.setDish(dish);
-        menuItem.setPrice(menuItem.getPrice());
+        menuItem.setPrice(menuItemTo.getPrice());
         return menuItem;
     }
 }

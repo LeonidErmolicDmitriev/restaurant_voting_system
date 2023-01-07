@@ -30,16 +30,16 @@ public class AdminDishController {
     }
 
     @GetMapping("/{id}")
-    public Dish get(@PathVariable int id) {
+    public ResponseEntity<Dish> get(@PathVariable int id) {
         log.info("get dish by id {}", id);
-        return dishRepository.findById(id).orElseThrow();
+        return ResponseEntity.of(dishRepository.findById(id));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         log.info("delete dish by id {}", id);
-        dishRepository.delete(id);
+        dishRepository.deleteExisted(id);
     }
 
     @GetMapping

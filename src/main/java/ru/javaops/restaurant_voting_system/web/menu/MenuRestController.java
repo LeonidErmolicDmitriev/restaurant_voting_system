@@ -5,6 +5,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.javaops.restaurant_voting_system.model.MenuItem;
 import ru.javaops.restaurant_voting_system.repository.MenuItemRepository;
@@ -38,7 +39,13 @@ public class MenuRestController extends AbstractMenuController {
 
     @GetMapping("/{id}")
     @Cacheable
-    public MenuItem get(@PathVariable int id) {
+    public ResponseEntity<MenuItem> get(@PathVariable int id) {
         return super.get(id);
+    }
+
+    @GetMapping("/today/restaurant/{id}")
+    @Cacheable
+    public List<MenuItem> getByRestaurantId(@PathVariable(name = "id") int restaurantId) {
+        return super.getByTodayByRestaurant(restaurantId);
     }
 }

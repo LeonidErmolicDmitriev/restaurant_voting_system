@@ -47,7 +47,7 @@ public class AdminMenuController extends AbstractMenuController {
 
     @GetMapping("/{id}")
     @Cacheable
-    public MenuItem get(@PathVariable int id) {
+    public ResponseEntity<MenuItem> get(@PathVariable int id) {
         return super.get(id);
     }
 
@@ -56,7 +56,7 @@ public class AdminMenuController extends AbstractMenuController {
     @CacheEvict(allEntries = true)
     public void delete(@PathVariable int id) {
         log.info("delete menu item by id {}", id);
-        menuItemRepository.delete(id);
+        menuItemRepository.deleteExisted(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -78,8 +78,20 @@ public class AdminMenuController extends AbstractMenuController {
     public void update(@Valid @RequestBody MenuItemTo menuItemTo, @PathVariable int id) {
         log.info("update menu item {} with id={}", menuItemTo, id);
         assureIdConsistent(menuItemTo, id);
-        MenuItem menuItem = menuItemRepository.getById(id);
+        MenuItem menuItem = menuItemRepository.getByIdWithRestaurantAndDish(id).orElseThrow();
         MenuItem updated = MenuUtil.updateFromTo(menuItem, menuItemTo, entityManager);
         menuItemRepository.save(updated);
+    }
+
+    @GetMapping("/today/restaurant/{id}")
+    @Cacheable
+    public List<MenuItem> getByRestaurantId(@PathVariable(name = "id") int restaurantId) {
+        return super.getByTodayByRestaurant(restaurantId);
+    }
+
+    @GetMapping("/today")
+    @Cacheable
+    public List<MenuItem> getByToday() {
+        return super.getByToday();
     }
 }

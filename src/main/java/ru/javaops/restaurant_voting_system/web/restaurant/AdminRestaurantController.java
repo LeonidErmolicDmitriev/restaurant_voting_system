@@ -30,16 +30,16 @@ public class AdminRestaurantController {
     }
 
     @GetMapping("/{id}")
-    public Restaurant get(@PathVariable int id) {
+    public ResponseEntity<Restaurant> get(@PathVariable int id) {
         log.info("get restaurant by id {}", id);
-        return restaurantRepository.findById(id).orElseThrow();
+        return ResponseEntity.of(restaurantRepository.findById(id));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         log.info("delete restaurant by id {}", id);
-        restaurantRepository.delete(id);
+        restaurantRepository.deleteExisted(id);
     }
 
     @GetMapping

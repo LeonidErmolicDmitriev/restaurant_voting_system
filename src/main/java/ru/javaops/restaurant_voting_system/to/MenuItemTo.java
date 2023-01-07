@@ -3,6 +3,7 @@ package ru.javaops.restaurant_voting_system.to;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
+import ru.javaops.restaurant_voting_system.model.MenuItem;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -10,7 +11,7 @@ import java.time.LocalDate;
 @Value
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class MenuItemTo extends BaseTo{
+public class MenuItemTo extends BaseTo {
 
     @PositiveOrZero
     int restaurantId;
@@ -31,5 +32,9 @@ public class MenuItemTo extends BaseTo{
         this.date = date;
         this.dishId = dishId;
         this.price = price;
+    }
+
+    public MenuItemTo(MenuItem menuItem) {
+        this(menuItem.getId(), menuItem.getRestaurantId(), menuItem.getDate(), menuItem.getDishId(), menuItem.getPrice());
     }
 }

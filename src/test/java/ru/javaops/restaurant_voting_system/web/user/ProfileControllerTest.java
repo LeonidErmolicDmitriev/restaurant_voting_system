@@ -14,6 +14,8 @@ import ru.javaops.restaurant_voting_system.util.UserUtil;
 import ru.javaops.restaurant_voting_system.web.AbstractControllerTest;
 import ru.javaops.restaurant_voting_system.web.GlobalExceptionHandler;
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -46,7 +48,7 @@ class ProfileControllerTest extends AbstractControllerTest {
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL))
                 .andExpect(status().isNoContent());
-        USER_MATCHER.assertMatch(userRepository.findAll(), admin);
+        USER_MATCHER.assertMatch(userRepository.findAll(), List.of(admin, user2, user3));
     }
 
     @Test

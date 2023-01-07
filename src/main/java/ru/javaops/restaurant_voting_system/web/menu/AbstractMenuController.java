@@ -1,6 +1,7 @@
 package ru.javaops.restaurant_voting_system.web.menu;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import ru.javaops.restaurant_voting_system.model.MenuItem;
 import ru.javaops.restaurant_voting_system.repository.MenuItemRepository;
 
@@ -32,8 +33,14 @@ public abstract class AbstractMenuController {
         return menuItemRepository.findAllByDate(date);
     }
 
-    public MenuItem get(int id) {
+    public ResponseEntity<MenuItem> get(int id) {
         log.info("get menu item by id {}", id);
-        return menuItemRepository.getByIdWithRestaurantAndDish(id).orElseThrow();
+        return ResponseEntity.of(menuItemRepository.getByIdWithRestaurantAndDish(id));
+    }
+
+    public List<MenuItem> getByTodayByRestaurant(int resraurantId) {
+        LocalDate date = LocalDate.now();
+        log.info("getByTodayByRestaurant");
+        return menuItemRepository.getByDateAndRestaurantId(date, resraurantId);
     }
 }

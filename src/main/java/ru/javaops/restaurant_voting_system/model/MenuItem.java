@@ -47,4 +47,20 @@ public class MenuItem extends BaseEntity {
         this.dish = dish;
         this.price = price;
     }
+
+    public int getRestaurantId() {
+        if (restaurant == null) {
+            return 0;
+        }
+        Integer restaurantId = restaurant.getId();
+        return (restaurantId == null) ? 0 : restaurantId;
+    }
+
+    public int getDishId() {
+        if (dish == null) {
+            return 0;
+        }
+        Integer dishId = dish.getId();
+        return (dishId == null) ? 0 : dishId;
+    }
 }
