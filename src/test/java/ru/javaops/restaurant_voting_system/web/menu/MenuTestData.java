@@ -34,35 +34,35 @@ public class MenuTestData {
 
     public static final Dish dish10 = new Dish(10, "Плов");
 
-    public static final MenuItem menuItemToday1 = new MenuItem(MENU_ITEM_ID_1, restaurant, LocalDate.now(),
+    public static final MenuItem menu_item_today1 = new MenuItem(MENU_ITEM_ID_1, restaurant, LocalDate.now(),
             dish1, 15000);
 
-    public static final MenuItem menuItemToday2 = new MenuItem(MENU_ITEM_ID_2, restaurant, LocalDate.now(),
+    public static final MenuItem menu_item_today2 = new MenuItem(MENU_ITEM_ID_2, restaurant, LocalDate.now(),
             dish3, 5000);
 
-    public static final MenuItem menuItemToday3 = new MenuItem(3, restaurant2, LocalDate.now(),
+    public static final MenuItem menu_item_today3 = new MenuItem(3, restaurant2, LocalDate.now(),
             new Dish(5, "4 cheese"), 50000);
 
-    public static final MenuItem menuItemToday4 = new MenuItem(4, restaurant2, LocalDate.now(), dish7, 5000);
+    public static final MenuItem menu_item_today4 = new MenuItem(4, restaurant2, LocalDate.now(), dish7, 5000);
 
-    public static final MenuItem menuItemToday5 = new MenuItem(5, restaurant3, LocalDate.now(), dish9, 30000);
+    public static final MenuItem menu_item_today5 = new MenuItem(5, restaurant3, LocalDate.now(), dish9, 30000);
 
-    public static final MenuItem menuItemToday6 = new MenuItem(6, restaurant3, LocalDate.now(), dish10, 40000);
+    public static final MenuItem menu_item_today6 = new MenuItem(6, restaurant3, LocalDate.now(), dish10, 40000);
 
-    public static final MenuItem menuItemToday7 = new MenuItem(7, restaurant3, LocalDate.now(),
+    public static final MenuItem menu_item_today7 = new MenuItem(7, restaurant3, LocalDate.now(),
             new Dish(13, "Компот"), 10000);
 
-    public static final MenuItem menuItemToday8 = new MenuItem(8, restaurant4, LocalDate.now(), dish9, 35000);
+    public static final MenuItem menu_item_today8 = new MenuItem(8, restaurant4, LocalDate.now(), dish9, 35000);
 
-    public static final MenuItem menuItemToday9 = new MenuItem(9, restaurant4, LocalDate.now(), dish10, 35000);
+    public static final MenuItem menu_item_today9 = new MenuItem(9, restaurant4, LocalDate.now(), dish10, 35000);
 
-    public static final MenuItem menuItemToday10 = new MenuItem(10, restaurant4, LocalDate.now(), dish7, 5500);
+    public static final MenuItem menu_item_today10 = new MenuItem(10, restaurant4, LocalDate.now(), dish7, 5500);
 
-    public static final List<MenuItem> restaurantTodayMenu = List.of(menuItemToday1, menuItemToday2);
+    public static final List<MenuItem> restaurant_today_menu = List.of(menu_item_today1, menu_item_today2);
 
-    public static final List<MenuItem> todayMenu = List.of(menuItemToday3, menuItemToday4, menuItemToday1,
-            menuItemToday2, menuItemToday10, menuItemToday8, menuItemToday9, menuItemToday5, menuItemToday6,
-            menuItemToday7);
+    public static final List<MenuItem> today_menu = List.of(menu_item_today3, menu_item_today4, menu_item_today1,
+            menu_item_today2, menu_item_today10, menu_item_today8, menu_item_today9, menu_item_today5, menu_item_today6,
+            menu_item_today7);
 
     public static MenuItem getNew() {
         return new MenuItem(null, restaurant2, LocalDate.now(), dish10, 100);

@@ -39,7 +39,7 @@ class AdminMenuControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 // https://jira.spring.io/browse/SPR-14472
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MENU_ITEM_MATCHER.contentJson(menuItemToday1));
+                .andExpect(MENU_ITEM_MATCHER.contentJson(menu_item_today1));
     }
 
     @Test
@@ -86,7 +86,7 @@ class AdminMenuControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL + "today"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MENU_ITEM_MATCHER.contentJson(todayMenu));
+                .andExpect(MENU_ITEM_MATCHER.contentJson(today_menu));
     }
 
     @Test
@@ -96,7 +96,7 @@ class AdminMenuControllerTest extends AbstractControllerTest {
                 .ofPattern("yyyy-MM-dd").format(LocalDate.now())))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MENU_ITEM_MATCHER.contentJson(todayMenu));
+                .andExpect(MENU_ITEM_MATCHER.contentJson(today_menu));
     }
 
     @Test
@@ -105,7 +105,7 @@ class AdminMenuControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL + "today/restaurant/" + restaurant.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MENU_ITEM_MATCHER.contentJson(restaurantTodayMenu));
+                .andExpect(MENU_ITEM_MATCHER.contentJson(restaurant_today_menu));
     }
 
     @Test
