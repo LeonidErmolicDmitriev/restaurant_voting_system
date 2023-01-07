@@ -61,3 +61,18 @@ VALUES (CURRENT_DATE, 1, 1, 15000),
        (CURRENT_DATE + 1, 3, 11, 30000),
        (CURRENT_DATE + 1, 3, 12, 20000),
        (CURRENT_DATE + 1, 3, 13, 12000);
+
+INSERT INTO VOTES(date, user_id, restaurant_id)
+VALUES (CURRENT_DATE, 1, 1),
+       (CURRENT_DATE, 2, 3),
+       (CURRENT_DATE, 3, 3),
+
+       (CURRENT_DATE - 1, 1, 2),
+       (CURRENT_DATE - 1, 2, 3),
+       (CURRENT_DATE - 1, 3, 4),
+       (CURRENT_DATE - 1, 4, 2),
+
+       (CURRENT_DATE + 1, 1, 1),
+       (CURRENT_DATE + 1, 2, 3),
+       (CURRENT_DATE + 1, 3, 1),
+       (CURRENT_DATE + 1, 4, 1);
