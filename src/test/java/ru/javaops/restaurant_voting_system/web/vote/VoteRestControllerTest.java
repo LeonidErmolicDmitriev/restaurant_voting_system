@@ -51,7 +51,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void getNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + VoteTestData.NOT_FOUND))
+        perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND_VOTE_ID))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
@@ -84,7 +84,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void createWithLocation() throws Exception {
-        Vote newVote = VoteTestData.getNew();
+        Vote newVote = getNewVote();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + "?restaurantId="
                         + ADMIN_RESTAURANT_VOTE_ID)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -103,7 +103,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = USER_MAIL)
     void createDuplicate() throws Exception {
-        Vote newVote = VoteTestData.getNew();
+        Vote newVote = getNewVote();
         newVote.setUser(user);
         perform(MockMvcRequestBuilders.post(REST_URL + "?restaurantId="
                         + ADMIN_RESTAURANT_VOTE_ID)
@@ -115,7 +115,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = USER_MAIL)
     void updateBeforeMaxTime() throws Exception {
-        Vote updatedVote = VoteTestData.getUpdated();
+        Vote updatedVote = getUpdatedVote();
         VoteRestController.setMaxUpdateTime(LocalTime.now().plusHours(1));
         perform(MockMvcRequestBuilders.put(REST_URL + "?restaurantId="
                         + ADMIN_RESTAURANT_VOTE_ID)
@@ -131,7 +131,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = USER_MAIL)
     void updateAfterMaxTime() throws Exception {
-        Vote updatedVote = VoteTestData.getUpdated();
+        Vote updatedVote = getUpdatedVote();
         VoteRestController.setMaxUpdateTime(LocalTime.now().minusHours(1));
         perform(MockMvcRequestBuilders.put(REST_URL + "?restaurantId="
                         + ADMIN_RESTAURANT_VOTE_ID)

@@ -16,7 +16,7 @@ public class VoteTestData {
 
     public static final int USER_VOTE_ID = 1;
 
-    public static final int NOT_FOUND = 100;
+    public static final int NOT_FOUND_VOTE_ID = 100;
 
     public static final int ADMIN_RESTAURANT_VOTE_ID = 4;
 
@@ -28,11 +28,11 @@ public class VoteTestData {
 
     public static final List<Vote> votes_today = List.of(vote_user, vote_user2, vote_user3);
 
-    public static Vote getNew() {
+    public static Vote getNewVote() {
         return new Vote(null, admin, restaurant4, LocalDate.now());
     }
 
-    public static Vote getUpdated() {
+    public static Vote getUpdatedVote() {
         return new Vote(USER_VOTE_ID, user, restaurant4, LocalDate.now());
     }
 }
