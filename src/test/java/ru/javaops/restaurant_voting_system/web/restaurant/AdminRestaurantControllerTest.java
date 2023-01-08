@@ -79,17 +79,17 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void createWithLocation() throws Exception {
-        Restaurant newDish = getNew();
+        Restaurant newRestaurant = getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(newDish)))
+                .content(JsonUtil.writeValue(newRestaurant)))
                 .andExpect(status().isCreated());
 
         Restaurant created = RESTAURANT_MATCHER.readFromJson(action);
         int newId = created.id();
-        newDish.setId(newId);
-        RESTAURANT_MATCHER.assertMatch(created, newDish);
-        RESTAURANT_MATCHER.assertMatch(restaurantRepository.getById(newId), newDish);
+        newRestaurant.setId(newId);
+        RESTAURANT_MATCHER.assertMatch(created, newRestaurant);
+        RESTAURANT_MATCHER.assertMatch(restaurantRepository.getById(newId), newRestaurant);
     }
 
     @Test
