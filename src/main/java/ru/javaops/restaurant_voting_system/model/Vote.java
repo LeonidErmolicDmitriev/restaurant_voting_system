@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
-public class Vote extends BaseEntity{
+public class Vote extends BaseEntity {
 
     @JoinColumn(name = "user_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,5 +39,13 @@ public class Vote extends BaseEntity{
         this.user = user;
         this.restaurant = restaurant;
         this.date = date;
+    }
+
+    public int getUserId() {
+        if (user == null) {
+            return 0;
+        }
+        Integer userId = user.getId();
+        return (userId == null) ? 0 : userId;
     }
 }

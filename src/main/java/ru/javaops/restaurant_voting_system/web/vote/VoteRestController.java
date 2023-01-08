@@ -11,6 +11,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javaops.restaurant_voting_system.error.IllegalRequestDataException;
 import ru.javaops.restaurant_voting_system.model.*;
 import ru.javaops.restaurant_voting_system.repository.VoteRepository;
+import ru.javaops.restaurant_voting_system.to.VoteTo;
+import ru.javaops.restaurant_voting_system.util.VoteUtil;
 import ru.javaops.restaurant_voting_system.web.AuthUser;
 
 import javax.persistence.EntityManager;
@@ -28,7 +30,9 @@ public class VoteRestController {
 
     private final VoteRepository voteRepository;
 
-    private final LocalTime maxUpdateTime = LocalTime.of(11, 0);
+    static LocalTime maxUpdateTime = LocalTime.of(11, 0);
+
+    static final LocalTime MAX_UPDATE_TIME = LocalTime.of(11, 0);
 
     private final EntityManager entityManager;
 
@@ -38,44 +42,44 @@ public class VoteRestController {
     }
 
     @GetMapping("/by_date")
-    public List<Vote> getByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public List<VoteTo> getByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         log.info("getByDate");
         return getAllByDate(date);
     }
 
     @GetMapping("/today")
-    public List<Vote> getByToday() {
+    public List<VoteTo> getByToday() {
         LocalDate date = LocalDate.now();
         log.info("getByToday");
         return getAllByDate(date);
     }
 
-    private List<Vote> getAllByDate(LocalDate date) {
+    private List<VoteTo> getAllByDate(LocalDate date) {
         log.info("get votes by date {}", date);
-        return voteRepository.getAllByDate(date);
+        return VoteUtil.votesToTos(voteRepository.getAllByDate(date));
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Vote getByUser(@AuthenticationPrincipal AuthUser authUser) {
+    public ResponseEntity<VoteTo> getByUser(@AuthenticationPrincipal AuthUser authUser) {
         int userId = authUser.id();
-        log.info("get vote for user id={}", userId);
-        return voteRepository.getByDateAndUserId(LocalDate.now(), userId).orElseThrow();
+        log.info("get current vote for user id={}", userId);
+        return ResponseEntity.of(VoteUtil.getTo(voteRepository.getByDateAndUserId(LocalDate.now(), userId)));
     }
 
     @GetMapping("/{id}")
-    public Vote get(@PathVariable int id) {
+    public ResponseEntity<VoteTo> get(@PathVariable int id) {
         log.info("get dish by id {}", id);
-        return voteRepository.findById(id).orElseThrow();
+        return ResponseEntity.of(VoteUtil.getTo(voteRepository.getByIdWithUserAndRestaurant(id)));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Vote> createWithLocation(@RequestParam Integer restaurantId, @AuthenticationPrincipal AuthUser authUser) {
+    public ResponseEntity<VoteTo> createWithLocation(@RequestParam Integer restaurantId, @AuthenticationPrincipal AuthUser authUser) {
         log.info("create vote for user id {} with restaurant id={}", authUser.id(), restaurantId);
         Vote newVote = saveVote(restaurantId, authUser, true);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(newVote.getId()).toUri();
-        return ResponseEntity.created(uriOfNewResource).body(newVote);
+        return ResponseEntity.created(uriOfNewResource).body(new VoteTo(newVote));
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -85,18 +89,22 @@ public class VoteRestController {
         saveVote(restaurantId, authUser, false);
     }
 
-    private Vote saveVote(Integer restaurantId, AuthUser authUser, boolean isCreateOp){
+    private Vote saveVote(Integer restaurantId, AuthUser authUser, boolean isCreateOp) {
         LocalDate today = LocalDate.now();
         Restaurant restaurant = entityManager.find(Restaurant.class, restaurantId);
         Vote newVote = new Vote(null, authUser.getUser(), restaurant, today);
         Vote vote = voteRepository.getByDateAndUserId(today, authUser.id()).orElse(newVote);
         if (vote.isNew() != isCreateOp) {
-            throw new IllegalRequestDataException("Please call the " + (isCreateOp? "update": "create") + " method");
+            throw new IllegalRequestDataException("Please call the " + (isCreateOp ? "update" : "create") + " method");
         }
-        if (!isCreateOp && LocalTime.now().isBefore(maxUpdateTime)){
+        if (!isCreateOp && !LocalTime.now().isBefore(maxUpdateTime)) {
             throw new IllegalRequestDataException("No more voting updates is allowed");
         }
-        newVote.setId(vote.id());
+        newVote.setId(vote.getId());
         return voteRepository.save(newVote);
+    }
+
+    public static void setMaxUpdateTime(LocalTime time) {
+        maxUpdateTime = time;
     }
 }

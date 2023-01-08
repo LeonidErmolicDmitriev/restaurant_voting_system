@@ -10,15 +10,19 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public interface VoteRepository extends BaseRepository<Vote>{
+public interface VoteRepository extends BaseRepository<Vote> {
     @Transactional(readOnly = true)
-    @EntityGraph(attributePaths = {"restaurant", "user"})
+    @EntityGraph(attributePaths = {"restaurant"})
     @Query("SELECT v FROM Vote v WHERE v.date = :date ORDER BY v.restaurant.name, v.user.id")
-    List<Vote> getAllByDate(@Param("date")LocalDate date);
+    List<Vote> getAllByDate(@Param("date") LocalDate date);
 
     @Transactional(readOnly = true)
-    @EntityGraph(attributePaths = {"restaurant", "user"})
-    @Query("SELECT v FROM Vote v WHERE v.date = :date and v.user.id = :userId")
-    Optional<Vote> getByDateAndUserId(@Param("date")LocalDate date, @Param("userId")Integer userId);
+    @EntityGraph(attributePaths = {"restaurant"})
+    @Query("SELECT v FROM Vote v WHERE v.date = :date AND v.user.id = :userId")
+    Optional<Vote> getByDateAndUserId(@Param("date") LocalDate date, @Param("userId") Integer userId);
 
+    @Transactional(readOnly = true)
+    @EntityGraph(attributePaths = {"restaurant"})
+    @Query("SELECT v FROM Vote v WHERE v.id = :id")
+    Optional<Vote> getByIdWithUserAndRestaurant(@Param("id") Integer id);
 }
