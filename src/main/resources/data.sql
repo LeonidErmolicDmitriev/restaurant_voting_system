@@ -64,8 +64,8 @@ VALUES (CURRENT_DATE, 1, 1, 15000),
 
 INSERT INTO VOTES(date, user_id, restaurant_id)
 VALUES (CURRENT_DATE, 1, 1),
-       (CURRENT_DATE, 2, 3),
        (CURRENT_DATE, 3, 3),
+       (CURRENT_DATE, 4, 3),
 
        (CURRENT_DATE - 1, 1, 2),
        (CURRENT_DATE - 1, 2, 3),
