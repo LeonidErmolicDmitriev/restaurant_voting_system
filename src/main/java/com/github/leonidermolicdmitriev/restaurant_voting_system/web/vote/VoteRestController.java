@@ -97,7 +97,8 @@ public class VoteRestController {
         if (vote.isNew() != isCreateOp) {
             throw new IllegalRequestDataException("Please call the " + (isCreateOp ? "update" : "create") + " method");
         }
-        if (!isCreateOp && (maxUpdateTime.equals(LocalTime.MIN)
+        if (!isCreateOp &&
+                (maxUpdateTime.equals(LocalTime.MIN)
                 || (!LocalTime.now().isBefore(maxUpdateTime) && !maxUpdateTime.equals(LocalTime.MAX)))) {
             throw new IllegalRequestDataException("No more voting updates is allowed");
         }
