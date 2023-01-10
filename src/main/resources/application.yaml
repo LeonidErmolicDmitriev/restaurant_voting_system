@@ -31,13 +31,13 @@ spring:
 
   # https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-cache
   cache:
-    cache-names: users, menu_items
+    cache-names: menu_items
     caffeine.spec: maximumSize=500,expireAfterAccess=60s
 
 logging:
   level:
     root: WARN
-    ru.javaops.restaurant_voting_system: DEBUG
+    com.github.leonidermolicdmitriev.restaurant_voting_system: DEBUG
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: DEBUG
 
 server.servlet:

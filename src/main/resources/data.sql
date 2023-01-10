@@ -14,25 +14,25 @@ VALUES ('USER', 1),
 INSERT INTO RESTAURANTS (name)
 VALUES ('Sushi com'),
        ('Pizza hut'),
-       ('Как дома'),
-       ('Есть все');
+       ('Как дома');
 
-INSERT INTO DISHES (name)
-VALUES ('Philadelphia'),
-       ('Spice herring'),
-       ('Green tea'),
-       ('Latte'),
-       ('4 cheese'),
-       ('Rancho'),
-       ('Coca cola'),
-       ('Sprite'),
-       ('Борщ'),
-       ('Плов'),
-       ('Зама'),
-       ('Картошка по-домашнему'),
-       ('Компот');
+INSERT INTO DISHES (name, restaurant_id)
+VALUES ('Philadelphia', 1),
+       ('Spice herring', 1),
+       ('Green tea', 1),
+       ('Latte', 1),
+       ('4 cheese', 2),
+       ('Rancho', 2),
+       ('Coca cola', 2),
+       ('Sprite', 2),
+       ('Борщ', 3),
+       ('Плов', 3),
+       ('Зама', 3),
+       ('Картошка по-домашнему', 3),
+       ('Компот', 3),
+       ('Тесто', 1);
 
-INSERT INTO MENU_ITEMS(date, restaurant_id, dish_id, price)
+INSERT INTO MENU_ITEMS(registered_date, restaurant_id, dish_id, price)
 VALUES (CURRENT_DATE, 1, 1, 15000),
        (CURRENT_DATE, 1, 3, 5000),
        (CURRENT_DATE, 2, 5, 50000),
@@ -40,9 +40,6 @@ VALUES (CURRENT_DATE, 1, 1, 15000),
        (CURRENT_DATE, 3, 9, 30000),
        (CURRENT_DATE, 3, 10, 40000),
        (CURRENT_DATE, 3, 13, 10000),
-       (CURRENT_DATE, 4, 9, 35000),
-       (CURRENT_DATE, 4, 10, 35000),
-       (CURRENT_DATE, 4, 7, 5500),
 
        (CURRENT_DATE - 1, 1, 2, 50000),
        (CURRENT_DATE - 1, 1, 4, 8000),
@@ -51,8 +48,6 @@ VALUES (CURRENT_DATE, 1, 1, 15000),
        (CURRENT_DATE - 1, 3, 11, 25000),
        (CURRENT_DATE - 1, 3, 12, 20000),
        (CURRENT_DATE - 1, 3, 13, 10000),
-       (CURRENT_DATE - 1, 4, 1, 55000),
-       (CURRENT_DATE - 1, 4, 4, 7500),
 
        (CURRENT_DATE + 1, 1, 2, 49000),
        (CURRENT_DATE + 1, 1, 4, 8300),
@@ -62,14 +57,14 @@ VALUES (CURRENT_DATE, 1, 1, 15000),
        (CURRENT_DATE + 1, 3, 12, 20000),
        (CURRENT_DATE + 1, 3, 13, 12000);
 
-INSERT INTO VOTES(date, user_id, restaurant_id)
+INSERT INTO VOTES(registered_date, user_id, restaurant_id)
 VALUES (CURRENT_DATE, 1, 1),
        (CURRENT_DATE, 3, 3),
        (CURRENT_DATE, 4, 3),
 
        (CURRENT_DATE - 1, 1, 2),
        (CURRENT_DATE - 1, 2, 3),
-       (CURRENT_DATE - 1, 3, 4),
+       (CURRENT_DATE - 1, 3, 1),
        (CURRENT_DATE - 1, 4, 2),
 
        (CURRENT_DATE + 1, 1, 1),
