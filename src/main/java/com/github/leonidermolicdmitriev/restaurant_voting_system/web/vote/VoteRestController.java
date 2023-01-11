@@ -78,7 +78,7 @@ public class VoteRestController {
         Vote newVote = saveVote(restaurantId, authUser, true);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/profile")
-                .buildAndExpand(newVote.getId()).toUri();
+                .buildAndExpand().toUri();
         return ResponseEntity.created(uriOfNewResource).body(VoteUtil.createTo(newVote));
     }
 
